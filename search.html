@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Search Results - Amrut</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="p-4">
+  <h2>Search Results</h2>
+  <div id="results" class="row g-4 mt-3"></div>
+
+<script>
+// Get query from URL
+const params = new URLSearchParams(window.location.search);
+const query = params.get("q") ? params.get("q").toLowerCase() : "";
+
+// Example product database (you can expand this)
+const products = [
+  { name: "Gold Necklace", price: 65000, img: "images/gold1.jpg" },
+  { name: "Elegant Gold Bangles", price: 45000, img: "images/gold2.jpg" },
+  { name: "Traditional Gold Earrings", price: 58500, img: "images/goldtraditional.jpg" },
+  { name: "Gold Ring", price: 32000, img: "images/goldring.jpg" }
+];
+
+const resultsDiv = document.getElementById("results");
+let found = false;
+
+products.forEach(p => {
+  if (p.name.toLowerCase().includes(query)) {
+    found = true;
+    resultsDiv.innerHTML += `
+      <div class="col-md-3 col-sm-6">
+        <div class="card">
+          <img src="${p.img}" class="card-img-top" alt="${p.name}">
+          <div class="card-body text-center">
+            <h5>${p.name}</h5>
+            <p>₹ ${p.price}</p>
+          </div>
+        </div>
+      </div>`;
+  }
+});
+
+if (!found) {
+  resultsDiv.innerHTML = "<p>No results found for <b>" + query + "</b>.</p>";
+}
+</script>
+</body>
+</html>
